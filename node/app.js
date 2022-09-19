@@ -117,7 +117,9 @@ async function run() {
 
       // Include only the `title` and `imdb` fields in each returned document
 
-      projection: { _id: 0, date: 1, non_nifty: 1 },
+      // projection: { _id: 0, date: 1, non_nifty: 1 },
+      projection: { _id: 0, date: 1, nifty: 1 },
+
     };
 
     const cursor = uptrend.find({}, options);
@@ -139,12 +141,12 @@ async function run() {
         currentDate.setMonth(currentDate.getMonth() - 1)
       );
       if (date.getMonth() === lastMonthDate.getMonth()) {
-        let res = {date: date.toDateString(),stock:el.non_nifty.vol_based[0]?el.non_nifty.vol_based[0].name:null}
+        let res = {date: date.toDateString(),stock:el.nifty.vol_based[0]?el.nifty.vol_based[0].name:null}
         result.push(res)
       }
     });
     const csv = new ObjectsToCsv(result)
-    await csv.toDisk('./lastmonth.csv')
+    await csv.toDisk('./lastmonthtest.csv')
 
 
     
